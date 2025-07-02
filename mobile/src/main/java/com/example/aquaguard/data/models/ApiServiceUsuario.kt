@@ -3,12 +3,24 @@ package com.example.aquaguard.data.models
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.PUT
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.DELETE
 import retrofit2.http.Path
 
 interface ApiServiceUsuario {
+    @GET("/Usuarios")
+    suspend fun obtenerUsuarios(): Response<List<Usuario>>
+
+    @GET("/Usuarios/{id}")
+    suspend fun obtenerUsuarioPorId(@Path("id") id: Int): Response<Usuario>
+
+    @POST("/Usuarios/agregarUsuario")
+    suspend fun agregarUsuario(@Body usuario: Usuario): Response<Void>
+
     @PUT("/Usuarios/modificarUsuario/{id}")
-    suspend fun modificarUsuario(
-        @Path("id") id: Int,
-        @Body usuario: Usuario
-    ): Response<Unit>
+    suspend fun modificarUsuario(@Path("id") id: Int, @Body usuario: Usuario): Response<Void>
+
+    @DELETE("/Usuarios/eliminarUsuario/{id}")
+    suspend fun eliminarUsuario(@Path("id") id: Int): Response<Void>
 }
