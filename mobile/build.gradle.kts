@@ -48,6 +48,10 @@ dependencies {
     // Retrofit para llamadas HTTP
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.6.0")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.6.0")
+
+
 
     // Core y UI de Android y Compose
     implementation(libs.androidx.core.ktx)

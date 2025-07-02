@@ -15,6 +15,7 @@ import com.example.aquaguard.ui.home.HomeScreen
 import com.example.aquaguard.ui.navigation.BottomNavigationBar
 import com.example.aquaguard.ui.navigation.Screen
 import com.example.aquaguard.ui.profile.ProfileScreen
+import com.example.aquaguard.ui.register.RegisterScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

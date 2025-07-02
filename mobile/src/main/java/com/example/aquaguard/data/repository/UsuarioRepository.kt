@@ -2,10 +2,11 @@ package com.example.aquaguard.data.repository
 
 import com.example.aquaguard.data.interfaces.ApiServiceUsuario
 import com.example.aquaguard.data.models.Usuario
+import retrofit2.Response
 
 class UsuarioRepository(private val apiService: ApiServiceUsuario) {
 
-    suspend fun obtenerUsuarios(): List<Usuario> {
+    suspend fun obtenerUsuarios(): Response<List<Usuario>> {
         return apiService.obtenerUsuarios()
     }
 
