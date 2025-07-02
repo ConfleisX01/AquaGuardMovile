@@ -11,7 +11,7 @@ import retrofit2.http.Path
 
 interface ApiServiceUsuario {
     @GET("/Usuarios")
-    suspend fun obtenerUsuarios(): List<Usuario>
+    suspend fun obtenerUsuarios(): Response<List<Usuario>>
 
     @POST("/Usuarios")
     suspend fun agregarUsuario(@Body usuario: Usuario): Response<Void>

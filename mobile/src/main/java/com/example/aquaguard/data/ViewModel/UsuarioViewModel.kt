@@ -3,14 +3,14 @@ package com.example.aquaguard.data.ViewModel
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.aquaguard.data.config.RetrofitClient
 import com.example.aquaguard.data.models.Usuario
-import com.example.aquaguard.data.repository.UsuarioRepository
+import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 
-class UsuarioViewModel(private val repository: UsuarioRepository) : ViewModel() {
+class UsuarioViewModel : ViewModel() {
 
     var usuarios = mutableStateListOf<Usuario>()
         private set
@@ -21,9 +21,13 @@ class UsuarioViewModel(private val repository: UsuarioRepository) : ViewModel() 
     fun cargarUsuarios() {
         viewModelScope.launch {
             try {
-                val lista = repository.obtenerUsuarios()
-                usuarios.clear()
-                usuarios.addAll(lista)
+                val response = RetrofitClient.apiServiceUsuario.obtenerUsuarios()
+                if (response.isSuccessful) {
+                    usuarios.clear()
+                    usuarios.addAll(response.body() ?: emptyList())
+                } else {
+                    errorMessage = "Error al obtener usuarios"
+                }
             } catch (e: Exception) {
                 errorMessage = e.message
             }
@@ -32,25 +36,46 @@ class UsuarioViewModel(private val repository: UsuarioRepository) : ViewModel() 
 
     fun agregarUsuario(usuario: Usuario) {
         viewModelScope.launch {
-            val exito = repository.agregarUsuario(usuario)
-            if (exito) cargarUsuarios()
-            else errorMessage = "Error al agregar usuario"
+            try {
+                val response = RetrofitClient.apiServiceUsuario.agregarUsuario(usuario)
+                if (response.isSuccessful) {
+                    cargarUsuarios()
+                } else {
+                    errorMessage = "Error al agregar usuario: ${response.code()}"
+                }
+            } catch (e: Exception) {
+                errorMessage = e.message
+            }
         }
     }
 
     fun modificarUsuario(id: Int, usuario: Usuario) {
         viewModelScope.launch {
-            val exito = repository.modificarUsuario(id, usuario)
-            if (exito) cargarUsuarios()
-            else errorMessage = "Error al modificar usuario"
+            try {
+                val response = RetrofitClient.apiServiceUsuario.modificarUsuario(id, usuario)
+                if (response.isSuccessful) {
+                    cargarUsuarios()
+                } else {
+                    errorMessage = "Error al modificar usuario: ${response.code()}"
+                }
+            } catch (e: Exception) {
+                errorMessage = e.message
+            }
         }
     }
 
     fun eliminarUsuario(id: Int) {
         viewModelScope.launch {
-            val exito = repository.eliminarUsuario(id)
-            if (exito) cargarUsuarios()
-            else errorMessage = "Error al eliminar usuario"
+            try {
+                val response = RetrofitClient.apiServiceUsuario.eliminarUsuario(id)
+                if (response.isSuccessful) {
+                    cargarUsuarios()
+                } else {
+                    errorMessage = "Error al eliminar usuario: ${response.code()}"
+                }
+            } catch (e: Exception) {
+                errorMessage = e.message
+            }
         }
     }
 }

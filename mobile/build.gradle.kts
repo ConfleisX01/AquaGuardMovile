@@ -46,8 +46,8 @@ android {
 
 dependencies {
     // Retrofit para llamadas HTTP
-    implementation(libs.retrofit)
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")  // Conversor JSON Gson
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Core y UI de Android y Compose
     implementation(libs.androidx.core.ktx)
