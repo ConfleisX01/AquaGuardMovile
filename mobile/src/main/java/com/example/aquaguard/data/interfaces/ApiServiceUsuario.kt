@@ -1,5 +1,6 @@
-package com.example.aquaguard.data.models
+package com.example.aquaguard.data.interfaces
 
+import com.example.aquaguard.data.models.Usuario
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.PUT
@@ -10,12 +11,9 @@ import retrofit2.http.Path
 
 interface ApiServiceUsuario {
     @GET("/Usuarios")
-    suspend fun obtenerUsuarios(): Response<List<Usuario>>
+    suspend fun obtenerUsuarios(): List<Usuario>
 
-    @GET("/Usuarios/{id}")
-    suspend fun obtenerUsuarioPorId(@Path("id") id: Int): Response<Usuario>
-
-    @POST("/Usuarios/agregarUsuario")
+    @POST("/Usuarios")
     suspend fun agregarUsuario(@Body usuario: Usuario): Response<Void>
 
     @PUT("/Usuarios/modificarUsuario/{id}")
