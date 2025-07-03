@@ -1,5 +1,6 @@
 package com.example.aquaguard.data.ViewModel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 class UsuarioViewModel : ViewModel() {
+
+    init {
+        Log.i("ViewModelInit", "UsuarioViewModel creado")
+    }
+    var usuarioActual = mutableStateOf<Usuario?>(null)
+        private set
 
     var usuarios = mutableStateListOf<Usuario>()
         private set
@@ -25,13 +32,34 @@ class UsuarioViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     usuarios.clear()
                     usuarios.addAll(response.body() ?: emptyList())
+                    Log.i("API", "Si se cargaron los usuarios")
                 } else {
                     errorMessage = "Error al obtener usuarios"
+                    Log.e("API", "Error al cargar los usuarios ${response.code()}")
                 }
             } catch (e: Exception) {
                 errorMessage = e.message
+                Log.e("API", "Error de servidor, sabe porque")
+                Log.e("API", e.message.toString())
             }
         }
+    }
+
+    fun obtenerUsuario(id: Int) {
+            viewModelScope.launch {
+                try {
+                    val response = RetrofitClient.apiServiceUsuario.obtenerUsuariosId(id)
+                    if (response.isSuccessful) {
+                        usuarioActual.value = response.body()
+                        Log.i("API", "Si se cargaron los usuarios")
+                    } else {
+                        errorMessage = "Error al obtener usuarios"
+                        Log.e("API", "Error al cargar los usuarios ${response.code()}")
+                    }
+                } catch (e: Exception) {
+                    Log.e("Perfil", "Error de red: ${e.message}")
+                }
+            }
     }
 
     fun agregarUsuario(usuario: Usuario) {
