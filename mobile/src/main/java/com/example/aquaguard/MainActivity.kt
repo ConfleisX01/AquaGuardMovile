@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+@Preview
 @Composable
 fun MainScreen(navController: NavHostController = rememberNavController()) {
     Scaffold(
@@ -39,8 +40,8 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
             composable(Screen.Home.route) {
                 HomeScreen()
             }
-            composable(Screen.Profile.route) {
-                ProfileScreen()
+            composable(Screen.Register.route) {
+                RegisterScreen()
             }
         }
     }

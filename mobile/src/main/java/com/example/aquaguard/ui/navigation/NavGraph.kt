@@ -10,9 +10,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.runtime.getValue
 
+
 @Composable
 public fun BottomNavigationBar(navController: NavHostController) {
-    val items = listOf(Screen.Home, Screen.Profile)
+    val items = listOf(Screen.Home, Screen.Register)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 

@@ -16,7 +16,7 @@ class UsuarioViewModel : ViewModel() {
         private set
 
     var errorMessage by mutableStateOf<String?>(null)
-        private set
+        internal set
 
     fun cargarUsuarios() {
         viewModelScope.launch {
