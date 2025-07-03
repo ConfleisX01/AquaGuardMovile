@@ -1,6 +1,7 @@
 package com.example.aquaguard.data.models
 
 data class Usuario (
+    val id: Int,
     val nombre: String,
     val apellidoPaterno: String,
     val apellidoMaterno: String,

@@ -19,7 +19,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4" // O la versión que uses en libs.versions.toml
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
 
     buildFeatures {
@@ -54,6 +54,7 @@ dependencies {
 
 
     // Core y UI de Android y Compose
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.ui)
@@ -77,6 +78,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    debugImplementation(libs.ui.tooling)
 
     // Módulo Wear (si aplica)
     wearApp(project(":wear"))

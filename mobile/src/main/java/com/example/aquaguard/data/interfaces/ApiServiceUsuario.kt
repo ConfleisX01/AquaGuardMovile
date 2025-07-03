@@ -13,12 +13,15 @@ interface ApiServiceUsuario {
     @GET("Usuarios")
     suspend fun obtenerUsuarios(): Response<List<Usuario>>
 
+    @GET("Usuarios/{id}")
+    suspend fun obtenerUsuariosId(@Path("id") id: Int): Response<Usuario>
+
     @POST("Usuarios")
     suspend fun agregarUsuario(@Body usuario: Usuario): Response<Void>
 
-    @PUT("Usuarios/modificarUsuario/{id}")
+    @PUT("Usuarios/{id}")
     suspend fun modificarUsuario(@Path("id") id: Int, @Body usuario: Usuario): Response<Void>
 
-    @DELETE("Usuarios/eliminarUsuario/{id}")
+    @DELETE("Usuarios/{id}")
     suspend fun eliminarUsuario(@Path("id") id: Int): Response<Void>
 }
