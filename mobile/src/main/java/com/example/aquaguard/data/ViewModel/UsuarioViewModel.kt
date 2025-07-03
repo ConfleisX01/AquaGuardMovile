@@ -80,11 +80,17 @@ class UsuarioViewModel : ViewModel() {
     fun modificarUsuario(id: Int, usuario: Usuario) {
         viewModelScope.launch {
             try {
+                Log.d("API", "ID recibido: $id")
+                Log.d("API", "Usuario recibido: $usuario")
+
                 val response = RetrofitClient.apiServiceUsuario.modificarUsuario(id, usuario)
                 if (response.isSuccessful) {
-                    cargarUsuarios()
+                    Log.i("API", "EL usuario se actualizo con exito")
                 } else {
-                    errorMessage = "Error al modificar usuario: ${response.code()}"
+                    val errorBody = response.errorBody()?.string()
+                    errorMessage = "Error al modificar usuario: ${response.code()} - $errorBody"
+                    Log.e("API", "Código: ${response.code()}, mensaje: ${response.message()}")
+                    Log.e("API", "Detalle: $errorBody")
                 }
             } catch (e: Exception) {
                 errorMessage = e.message
