@@ -1,5 +1,6 @@
 package com.example.aquaguard.ui.profile
 
+import android.content.Context
 import android.provider.Telephony
 import android.util.Log
 import android.widget.Toast
@@ -29,17 +30,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.aquaguard.data.ViewModel.UsuarioViewModel
+import com.example.aquaguard.data.config.SessionManager
 import com.example.aquaguard.data.models.Usuario
 
 @Composable
-fun ProfileScreen(viewModel: UsuarioViewModel) {
+fun ProfileScreen(viewModel: UsuarioViewModel, context: Context) {
     val usuario = viewModel.usuarioActual.value
+    val sessionManager = remember { SessionManager(context) }
+    val usuarioSession = sessionManager.obtenerUsuario()
+
+    Log.i("CONTEXT", usuarioSession.toString())
 
     LaunchedEffect(Unit) {
-        viewModel.obtenerUsuario(1)
+        viewModel.obtenerUsuario(usuarioSession)
         Log.i("DEBUG", "Pasando por launchedEffect")
     }
 
+    var id by remember { mutableStateOf("") }
     var nombre by remember { mutableStateOf("") }
     var apellidoPaterno by remember { mutableStateOf("") }
     var apellidoMaterno by remember { mutableStateOf("") }
@@ -51,6 +58,7 @@ fun ProfileScreen(viewModel: UsuarioViewModel) {
 
     LaunchedEffect(usuario) {
         usuario?.let {
+            id = it.id.toString()
             nombre = it.nombre
             apellidoPaterno = it.apellidoPaterno
             apellidoMaterno = it.apellidoMaterno
@@ -133,7 +141,7 @@ fun ProfileScreen(viewModel: UsuarioViewModel) {
         Button(
             onClick = {
                 modificarUsuario(
-                    nombre, apellidoPaterno, apellidoMaterno, telefono, fechaNacimiento, pais, correo, contrasena, viewModel
+                    id, nombre, apellidoPaterno, apellidoMaterno, telefono, fechaNacimiento, pais, correo, contrasena, viewModel
                 )
             },
             modifier = Modifier.align(Alignment.End)
@@ -145,6 +153,7 @@ fun ProfileScreen(viewModel: UsuarioViewModel) {
 
 // Funcion para actualizar el usuario usando el View Model de usuarios
 fun modificarUsuario(
+    id: String,
     nombre: String,
     apellidoPaterno: String,
     apellidoMaterno: String,
@@ -156,7 +165,7 @@ fun modificarUsuario(
     viewModel: UsuarioViewModel
 ) {
     val usuarioActualizado = Usuario (
-        id = 1,
+        id = id.toInt(),
         nombre = nombre,
         apellidoPaterno = apellidoPaterno,
         apellidoMaterno = apellidoMaterno,
@@ -166,6 +175,6 @@ fun modificarUsuario(
         correo = correo,
         contrasena = contrasena
     )
-    val response = viewModel.modificarUsuario(1, usuarioActualizado)
+    val response = viewModel.modificarUsuario(id.toInt(), usuarioActualizado)
     Log.i("DEBUVAR", response.toString())
 }

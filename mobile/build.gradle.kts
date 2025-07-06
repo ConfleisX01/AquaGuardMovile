@@ -19,7 +19,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = "1.6.0"
     }
 
     buildFeatures {
@@ -45,41 +45,39 @@ android {
 }
 
 dependencies {
-    // Retrofit para llamadas HTTP
+    // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Compose (versión única: 1.6.0)
     implementation("androidx.compose.ui:ui-tooling-preview:1.6.0")
     debugImplementation("androidx.compose.ui:ui-tooling:1.6.0")
-
-
-
-    // Core y UI de Android y Compose
-    implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.navigation.compose)
+
+    // Otras dependencias de Android
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.wearable)
 
-    // ViewModel, Lifecycle y coroutines
+    // ViewModel y Coroutines
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    // Hilt para inyección de dependencias
+    // Hilt
     implementation("com.google.dagger:hilt-android:2.47")
 
-    // Testeo
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    debugImplementation(libs.ui.tooling)
 
-    // Módulo Wear (si aplica)
+    // Wear
     wearApp(project(":wear"))
 }

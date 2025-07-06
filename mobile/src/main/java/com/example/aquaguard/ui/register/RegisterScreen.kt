@@ -87,6 +87,7 @@ fun RegisterScreen(usuarioViewModel: UsuarioViewModel = viewModel()) {
                 }
 
                 val nuevoUsuario = Usuario(
+                    id = 0,
                     nombre = nombre,
                     apellidoPaterno = apellidoPaterno,
                     apellidoMaterno = apellidoMaterno,

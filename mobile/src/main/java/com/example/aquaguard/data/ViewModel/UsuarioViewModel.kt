@@ -67,15 +67,21 @@ class UsuarioViewModel : ViewModel() {
             try {
                 val response = RetrofitClient.apiServiceUsuario.agregarUsuario(usuario)
                 if (response.isSuccessful) {
+                    // Puedes obtener el usuario creado aquí
+                    val usuarioCreado = response.body()
+                    Log.i("API", "Usuario creado: $usuarioCreado")
                     cargarUsuarios()
                 } else {
                     errorMessage = "Error al agregar usuario: ${response.code()}"
+                    Log.e("API", "Error al agregar usuario: ${response.code()} - ${response.message()}")
                 }
             } catch (e: Exception) {
                 errorMessage = e.message
+                Log.e("API", "Exception: ${e.message}")
             }
         }
     }
+
 
     fun modificarUsuario(id: Int, usuario: Usuario) {
         viewModelScope.launch {

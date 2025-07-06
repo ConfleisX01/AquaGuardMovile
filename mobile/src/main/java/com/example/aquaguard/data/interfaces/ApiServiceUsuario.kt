@@ -17,7 +17,7 @@ interface ApiServiceUsuario {
     suspend fun obtenerUsuariosId(@Path("id") id: Int): Response<Usuario>
 
     @POST("Usuarios")
-    suspend fun agregarUsuario(@Body usuario: Usuario): Response<Void>
+    suspend fun agregarUsuario(@Body usuario: Usuario): Response<Usuario>
 
     @PUT("Usuarios/{id}")
     suspend fun modificarUsuario(@Path("id") id: Int, @Body usuario: Usuario): Response<Void>
