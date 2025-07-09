@@ -1,149 +1,66 @@
 package com.example.aquaguard.ui.profile
 
 import android.content.Context
-import android.provider.Telephony
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.aquaguard.data.ViewModel.UsuarioViewModel
 import com.example.aquaguard.data.config.SessionManager
-import com.example.aquaguard.data.models.Usuario
 
 @Composable
-fun ProfileScreen(viewModel: UsuarioViewModel, context: Context) {
-    val usuario = viewModel.usuarioActual.value
+fun ProfileScreen(viewModel: ProfileViewModel, context: Context) {
+    val formState by viewModel.formState.collectAsState()
     val sessionManager = remember { SessionManager(context) }
-    val usuarioSession = sessionManager.obtenerUsuario()
+    val usuarioSesionId = sessionManager.obtenerUsuario()
 
-    Log.i("CONTEXT", usuarioSession.toString())
-
+    // Cargamos los datos del usuario cuando inicie la pantalla
     LaunchedEffect(Unit) {
-        viewModel.obtenerUsuario(usuarioSession)
-        Log.i("DEBUG", "Pasando por launchedEffect")
-    }
-
-    var id by remember { mutableStateOf("") }
-    var nombre by remember { mutableStateOf("") }
-    var apellidoPaterno by remember { mutableStateOf("") }
-    var apellidoMaterno by remember { mutableStateOf("") }
-    var telefono by remember { mutableStateOf("") }
-    var fechaNacimiento by remember { mutableStateOf("") }
-    var pais by remember { mutableStateOf("") }
-    var correo by remember { mutableStateOf("") }
-    var contrasena by remember { mutableStateOf("") }
-
-    LaunchedEffect(usuario) {
-        usuario?.let {
-            id = it.id.toString()
-            nombre = it.nombre
-            apellidoPaterno = it.apellidoPaterno
-            apellidoMaterno = it.apellidoMaterno
-            telefono = it.telefono
-            fechaNacimiento = it.fechaNacimiento
-            pais = it.pais
-            correo = it.correo
-            contrasena = it.contrasena
-        }
+        viewModel.cargarUsuario(usuarioSesionId)
     }
 
     Column (
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
         Text("Editar perfil", style = MaterialTheme.typography.headlineSmall)
 
-        OutlinedTextField(
-            value = nombre,
-            onValueChange = { nombre = it },
-            label = { Text("Nombre") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = apellidoPaterno,
-            onValueChange = { apellidoPaterno = it },
-            label = { Text("Apellido Paterno") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = apellidoMaterno,
-            onValueChange = { apellidoMaterno = it },
-            label = { Text("Apellido Materno") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = telefono,
-            onValueChange = { telefono = it },
-            label = { Text("Teléfono") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        OutlinedTextField(
-            value = fechaNacimiento,
-            onValueChange = { fechaNacimiento = it },
-            label = { Text("Fecha de Nacimiento") },
-            modifier = Modifier.fillMaxWidth(),
-        )
-
-        OutlinedTextField(
-            value = pais,
-            onValueChange = { pais = it },
-            label = { Text("Pais") },
-            modifier = Modifier.fillMaxWidth(),
-        )
-
-        OutlinedTextField(
-            value = correo,
-            onValueChange = { correo = it },
-            label = { Text("Correo electrónico") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        OutlinedTextField(
-            value = contrasena,
-            onValueChange = { contrasena = it },
-            label = { Text("Contraseña") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
+        @Composable
+        fun Campo(label: String, valor: String, campo: String) {
+            OutlinedTextField(
+                value = valor,
+                onValueChange = { viewModel.actualizarCampo(campo, it) },
+                label = { Text(label) },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Campo("Nombre", formState.nombre, "nombre")
+        Campo("Apellido Paterno", formState.apellidoPaterno, "apellidoPaterno")
+        Campo("Apellido Materno", formState.apellidoMaterno, "apellidoMaterno")
+        Campo("Teléfono", formState.telefono, "telefono")
+        Campo("Fecha de nacimiento", formState.fechaNacimiento, "fechaNacimiento")
+        Campo("País", formState.pais, "pais")
+        Campo("Correo electrónico", formState.correo, "correo")
+        Campo("Contraseña", formState.contrasena, "contrasena")
 
         Button(
-            onClick = {
-                modificarUsuario(
-                    id, nombre, apellidoPaterno, apellidoMaterno, telefono, fechaNacimiento, pais, correo, contrasena, viewModel
-                )
-            },
+            onClick = { viewModel.guardarCambios() },
             modifier = Modifier.align(Alignment.End)
         ) {
             Text("Guardar Cambios")
@@ -151,30 +68,39 @@ fun ProfileScreen(viewModel: UsuarioViewModel, context: Context) {
     }
 }
 
-// Funcion para actualizar el usuario usando el View Model de usuarios
-fun modificarUsuario(
-    id: String,
-    nombre: String,
-    apellidoPaterno: String,
-    apellidoMaterno: String,
-    telefono: String,
-    fechaNacimiento: String,
-    pais: String,
-    correo: String,
-    contrasena: String,
-    viewModel: UsuarioViewModel
-) {
-    val usuarioActualizado = Usuario (
-        id = id.toInt(),
-        nombre = nombre,
-        apellidoPaterno = apellidoPaterno,
-        apellidoMaterno = apellidoMaterno,
-        telefono = telefono,
-        fechaNacimiento = fechaNacimiento,
-        pais = pais,
-        correo = correo,
-        contrasena = contrasena
-    )
-    val response = viewModel.modificarUsuario(id.toInt(), usuarioActualizado)
-    Log.i("DEBUVAR", response.toString())
+@Composable
+fun ProfileScreenPreview() {
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text("Editar perfil", style = MaterialTheme.typography.headlineSmall)
+
+        @Composable
+        fun Campo(label: String, valor: String, campo: String) {
+            OutlinedTextField(
+                value = valor,
+                onValueChange = { },
+                label = { Text(label) },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Campo("Nombre", "Nombre", "nombre")
+        Campo("Apellido Paterno", "Apellido Paterno", "apellidoPaterno")
+        Campo("Apellido Materno", "Apellido Materno", "apellidoMaterno")
+        Campo("Teléfono", "Telefono", "telefono")
+        Campo("Fecha de nacimiento", "Fecha de Nacimiento", "fechaNacimiento")
+        Campo("País", "Pais", "pais")
+        Campo("Correo electrónico", "Correo", "correo")
+        Campo("Contraseña", "Clave", "contrasena")
+
+        Button(
+            onClick = { Log.i("DEBUG", "Hola") },
+            modifier = Modifier.align(Alignment.End)
+        ) {
+            Text("Guardar Cambios")
+        }
+    }
 }

@@ -4,29 +4,29 @@ import com.google.gson.annotations.SerializedName
 
 data class Usuario (
     @SerializedName("id")
-    val id: Int,
+    val id: Int = 0,
 
     @SerializedName("nombre")
-    val nombre: String,
+    val nombre: String = "",
 
     @SerializedName("apellidoPaterno")
-    val apellidoPaterno: String,
+    val apellidoPaterno: String = "",
 
     @SerializedName("apellidoMaterno")
-    val apellidoMaterno: String,
+    val apellidoMaterno: String = "",
 
     @SerializedName("telefono")
-    val telefono: String,
+    val telefono: String = "",
 
     @SerializedName("fechaNacimiento")
-    val fechaNacimiento: String,
+    val fechaNacimiento: String = "",
 
     @SerializedName("pais")
-    val pais: String,
+    val pais: String = "",
 
     @SerializedName("correo")
-    val correo: String,
+    val correo: String = "",
 
     @SerializedName("contrasena")
-    val contrasena: String
+    val contrasena: String = ""
 )

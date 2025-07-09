@@ -25,6 +25,7 @@ import com.example.aquaguard.ui.login.LoginScreen
 import com.example.aquaguard.ui.navigation.BottomNavigationBar
 import com.example.aquaguard.ui.navigation.Screen
 import com.example.aquaguard.ui.profile.ProfileScreen
+import com.example.aquaguard.ui.profile.ProfileViewModel
 import com.example.aquaguard.ui.register.RegisterScreen
 
 class MainActivity : ComponentActivity() {
@@ -107,7 +108,7 @@ fun MainLayoutWithBottomNav(
                 HomeScreen(viewModel = viewModel, correoUsuario = correoUsuario, onLogout = onLogout)
             }
             composable(Screen.Profile.route) {
-                val viewModel: UsuarioViewModel = viewModel()
+                val viewModel: ProfileViewModel = viewModel()
                 ProfileScreen(viewModel, context)
             }
         }
