@@ -10,11 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,20 +27,19 @@ import com.example.aquaguard.ui.navigation.Screen
 import com.example.aquaguard.ui.profile.ProfileScreen
 import com.example.aquaguard.ui.profile.ProfileViewModel
 import com.example.aquaguard.ui.register.RegisterScreen
-import com.yourpackagename.ui.theme.AquaCycleTheme
+import com.example.aquaguard.ui.theme.AquaCycleTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AquaCycleTheme {
-                Surface (
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+            AquaCycleTheme {                         // Aplica tu tema global
+                Surface(
+                    modifier = Modifier.fillMaxSize(), // Cubre toda la pantalla
+                    color = MaterialTheme.colorScheme.background // Usa el color del fondo del tema
                 ) {
                     val context = LocalContext.current
-                    AppNavigation(context)
+                    AppNavigation(context)             // Llama a tu sistema de navegación o pantalla principal
                 }
             }
         }
