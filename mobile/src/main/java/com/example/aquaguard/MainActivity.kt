@@ -29,6 +29,7 @@ import com.example.aquaguard.ui.navigation.Screen
 import com.example.aquaguard.ui.profile.ProfileScreen
 import com.example.aquaguard.ui.profile.ProfileViewModel
 import com.example.aquaguard.ui.register.RegisterScreen
+import com.example.aquaguard.ui.register.RegisterViewModel
 import com.example.aquaguard.ui.welcome.WelcomeScreen
 import com.example.aquaguard.ui.welcome.WelcomeViewModel
 import com.example.compose.AquaCycleTheme
@@ -76,8 +77,8 @@ fun AppNavigation(context: Context) {
                 })
             }
             composable(Screen.Register.route) {
-                val viewModel: UsuarioViewModel = viewModel()
-                RegisterScreen(usuarioViewModel = viewModel)
+                val viewModel: RegisterViewModel = viewModel()
+                RegisterScreen(viewModel = viewModel, rootNavController)
             }
         }
 
