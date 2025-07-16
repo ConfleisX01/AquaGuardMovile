@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.aquaguard.ui.theme.AquaCycleTheme
+import com.example.compose.AquaCycleTheme
 
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel, context: Context) {
@@ -71,8 +71,9 @@ fun ProfileScreen(viewModel: ProfileViewModel, context: Context) {
 
             Button(
                 onClick = { viewModel.guardarCambios() },
-                modifier = Modifier.align(Alignment.End),
-                shape = RoundedCornerShape(50.dp)
+                modifier = Modifier.align(Alignment.End).fillMaxWidth(),
+                shape = RoundedCornerShape(50.dp),
+                contentPadding = ButtonDefaults.TextButtonContentPadding
             ) {
                 Text("Guardar Cambios")
             }

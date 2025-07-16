@@ -67,7 +67,6 @@ class UsuarioViewModel : ViewModel() {
             try {
                 val response = RetrofitClient.apiServiceUsuario.agregarUsuario(usuario)
                 if (response.isSuccessful) {
-                    // Puedes obtener el usuario creado aquí
                     val usuarioCreado = response.body()
                     Log.i("API", "Usuario creado: $usuarioCreado")
                     cargarUsuarios()

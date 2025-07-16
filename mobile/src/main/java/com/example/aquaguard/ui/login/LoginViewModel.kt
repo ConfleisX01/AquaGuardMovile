@@ -38,7 +38,6 @@ class LoginViewModel : ViewModel() {
                     onError("Error al comunicarse con el servidor: ${response.code()}")
                 }
             } catch (e: Exception) {
-                Log.e("LoginViewModel", "Excepción: ${e.message}")
                 onError("Error de conexión: ${e.message}")
             }
         }

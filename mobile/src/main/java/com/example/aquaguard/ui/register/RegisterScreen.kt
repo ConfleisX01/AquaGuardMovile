@@ -35,6 +35,8 @@ fun RegisterScreen(usuarioViewModel: UsuarioViewModel = viewModel()) {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 
+//    TODO: Mejorar la UI
+
     Column(
         modifier = Modifier
             .fillMaxSize()

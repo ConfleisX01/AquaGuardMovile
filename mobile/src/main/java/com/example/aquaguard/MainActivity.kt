@@ -17,17 +17,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.aquaguard.data.ViewModel.UsuarioViewModel
 import com.example.aquaguard.data.config.SessionManager
 import com.example.aquaguard.ui.home.HomeScreen
+import com.example.aquaguard.ui.home.HomeViewModel
 import com.example.aquaguard.ui.login.LoginScreen
 import com.example.aquaguard.ui.navigation.BottomNavigationBar
 import com.example.aquaguard.ui.navigation.Screen
 import com.example.aquaguard.ui.profile.ProfileScreen
 import com.example.aquaguard.ui.profile.ProfileViewModel
 import com.example.aquaguard.ui.register.RegisterScreen
-import com.example.aquaguard.ui.theme.AquaCycleTheme
+import com.example.aquaguard.ui.welcome.WelcomeScreen
+import com.example.aquaguard.ui.welcome.WelcomeViewModel
+import com.example.compose.AquaCycleTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background // Usa el color del fondo del tema
                 ) {
                     val context = LocalContext.current
-                    AppNavigation(context)             // Llama a tu sistema de navegación o pantalla principal
+                    AppNavigation(context)
                 }
             }
         }
@@ -48,63 +52,58 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun AppNavigation(context : Context) {
+fun AppNavigation(context: Context) {
     val sessionManager = remember { SessionManager(context) }
     val userSession = remember { mutableStateOf(sessionManager.getUser()) }
-
-    val navController = rememberNavController()
+    val rootNavController = rememberNavController()
 
     NavHost(
-        navController = navController,
-        startDestination = if (userSession.value != null) "main" else Screen.Login.route
+        navController = rootNavController,
+        startDestination = if (userSession.value != null) Screen.Main.route else "auth"
     ) {
-        composable(Screen.Login.route) {
-            LoginScreen(navController, onLoginSuccess = {
-                userSession.value = sessionManager.getUser()
-                navController.navigate(Screen.Home.route) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        inclusive = true
+        // Subgrafo de autenticación
+        navigation (startDestination = Screen.Welcome.route, route = "auth") {
+            composable(Screen.Welcome.route) {
+                val viewModel: WelcomeViewModel = viewModel()
+                WelcomeScreen(rootNavController, viewModel)
+            }
+            composable(Screen.Login.route) {
+                LoginScreen(navController = rootNavController, onLoginSuccess = {
+                    userSession.value = sessionManager.getUser()
+                    rootNavController.navigate(Screen.Main.route) {
+                        popUpTo("auth") { inclusive = true }
                     }
-                    launchSingleTop = true
-                }
-            })
+                })
+            }
+            composable(Screen.Register.route) {
+                val viewModel: UsuarioViewModel = viewModel()
+                RegisterScreen(usuarioViewModel = viewModel)
+            }
         }
 
-
-        composable(Screen.Register.route) {
-            val viewModel: UsuarioViewModel = viewModel()
-            RegisterScreen(usuarioViewModel = viewModel)
-        }
-
-        // 
-        composable("main") {
+        // Subgrafo principal con navegación inferior
+        composable(Screen.Main.route) {
             MainLayoutWithBottomNav(
+                context = context,
                 onLogout = {
                     sessionManager.clear()
                     userSession.value = null
-                    navController.navigate(Screen.Login.route) {
-                        popUpTo(0)
+                    rootNavController.navigate("auth") {
+                        popUpTo(Screen.Main.route) { inclusive = true }
                     }
-                },
-                context = context,
-                correoUsuario = userSession.value?.correo ?: ""
+                }
             )
         }
     }
 }
 
+
 @Composable
-fun MainLayoutWithBottomNav(
-    context : Context,
-    onLogout: () -> Unit,
-    correoUsuario: String
-) {
+fun MainLayoutWithBottomNav(context: Context, onLogout: () -> Unit) {
     val navController = rememberNavController()
 
     Scaffold(
-        bottomBar = {
-            BottomNavigationBar(navController)
-        }
+        bottomBar = { BottomNavigationBar(navController) }
     ) { paddingValues ->
         NavHost(
             navController = navController,
@@ -112,14 +111,13 @@ fun MainLayoutWithBottomNav(
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(Screen.Home.route) {
-                val viewModel: UsuarioViewModel = viewModel()
-                HomeScreen(viewModel = viewModel, correoUsuario = correoUsuario, onLogout = onLogout)
+                val viewModel: HomeViewModel = viewModel()
+                HomeScreen(viewModel = viewModel, onLogout = onLogout, context)
             }
             composable(Screen.Profile.route) {
                 val viewModel: ProfileViewModel = viewModel()
-                ProfileScreen(viewModel, context)
+                ProfileScreen(viewModel = viewModel, context)
             }
         }
     }
 }
-
