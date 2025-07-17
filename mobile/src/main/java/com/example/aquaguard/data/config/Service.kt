@@ -6,9 +6,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    //private const val BASE_URL = "http://10.246.34.2:5002/api/" // Cuando es emulador del android
+    private const val BASE_URL = "http://10.246.34.2:5002/api/" // Cuando es emulador del android
     //private const val BASE_URL = "http://192.168.1.11:5002/api/" // Cuando es dispositivo fisico
-    private const val BASE_URL = "http://192.168.0.200:5002/api/" // Server en casa de confleis
+    //private const val BASE_URL = "http://192.168.0.200:5002/api/" // Server en casa de confleis
 
     val apiServiceUsuario: ApiServiceUsuario by lazy {
         Retrofit.Builder()
