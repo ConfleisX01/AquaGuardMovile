@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.aquaguard.R
 import com.example.aquaguard.ui.navigation.Screen
-import com.example.compose.AquaCycleTheme
+import com.example.aquaguard.ui.theme.AquaGuardTheme
 
 @Composable
 fun WelcomeScreen(navController: NavController, viewModel: WelcomeViewModel) {
-    AquaCycleTheme {
+    AquaGuardTheme {
         Image(
             painter = painterResource(id = R.drawable.background_3),
             contentDescription = null,

@@ -48,6 +48,8 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
 
+    // Animaciones
+    implementation("com.google.accompanist:accompanist-placeholder-material:0.31.5-beta")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

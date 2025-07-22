@@ -16,5 +16,6 @@ sealed class Screen(
 
     object Main : Screen("main", "Principal") // no visible
     object Home : Screen("home", "Inicio", Icons.Default.Home)
-    object Profile : Screen("profile", "Perfil", Icons.Default.Person)
+    object ProfileEdit : Screen("profileEdit", "Editar Perfil", Icons.Default.Person)
+    object ProfileInformation : Screen("profileInformation", "Ver Perfil", Icons.Default.Person)
 }

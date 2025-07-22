@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -19,29 +20,30 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.aquaguard.data.ViewModel.UsuarioViewModel
 import com.example.aquaguard.data.config.SessionManager
 import com.example.aquaguard.ui.home.HomeScreen
 import com.example.aquaguard.ui.home.HomeViewModel
 import com.example.aquaguard.ui.login.LoginScreen
 import com.example.aquaguard.ui.navigation.BottomNavigationBar
 import com.example.aquaguard.ui.navigation.Screen
-import com.example.aquaguard.ui.profile.ProfileScreen
-import com.example.aquaguard.ui.profile.ProfileViewModel
+import com.example.aquaguard.ui.profile.edit.ProfileEditScreen
+import com.example.aquaguard.ui.profile.edit.ProfileEditViewModel
+import com.example.aquaguard.ui.profile.view.ProfileScreenInformation
+import com.example.aquaguard.ui.profile.view.ProfileScreenViewModel
 import com.example.aquaguard.ui.register.RegisterScreen
 import com.example.aquaguard.ui.register.RegisterViewModel
+import com.example.aquaguard.ui.theme.AquaGuardTheme
 import com.example.aquaguard.ui.welcome.WelcomeScreen
 import com.example.aquaguard.ui.welcome.WelcomeViewModel
-import com.example.compose.AquaCycleTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AquaCycleTheme {                         // Aplica tu tema global
+            AquaGuardTheme {                         // Aplicamos en tema global
                 Surface(
-                    modifier = Modifier.fillMaxSize(), // Cubre toda la pantalla
-                    color = MaterialTheme.colorScheme.background // Usa el color del fondo del tema
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     val context = LocalContext.current
                     AppNavigation(context)
@@ -59,6 +61,8 @@ fun AppNavigation(context: Context) {
     val rootNavController = rememberNavController()
 
     NavHost(
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background),
         navController = rootNavController,
         startDestination = if (userSession.value != null) Screen.Main.route else "auth"
     ) {
@@ -84,7 +88,7 @@ fun AppNavigation(context: Context) {
 
         // Subgrafo principal con navegación inferior
         composable(Screen.Main.route) {
-            MainLayoutWithBottomNav(
+            MainLayoutWithBottomNav (
                 context = context,
                 onLogout = {
                     sessionManager.clear()
@@ -115,9 +119,13 @@ fun MainLayoutWithBottomNav(context: Context, onLogout: () -> Unit) {
                 val viewModel: HomeViewModel = viewModel()
                 HomeScreen(viewModel = viewModel, onLogout = onLogout, context)
             }
-            composable(Screen.Profile.route) {
-                val viewModel: ProfileViewModel = viewModel()
-                ProfileScreen(viewModel = viewModel, context)
+            composable(Screen.ProfileInformation.route) {
+                val viewModel: ProfileScreenViewModel = viewModel()
+                ProfileScreenInformation(navController, context, viewModel, onLogout)
+            }
+            composable (Screen.ProfileEdit.route) {
+                val viewModel : ProfileEditViewModel = viewModel()
+                ProfileEditScreen(viewModel, context)
             }
         }
     }

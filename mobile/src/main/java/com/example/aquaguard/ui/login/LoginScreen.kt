@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.aquaguard.ui.navigation.Screen
-import com.example.compose.AquaCycleTheme
 
 import com.example.aquaguard.R
 

@@ -1,4 +1,4 @@
-package com.example.aquaguard.ui.profile
+package com.example.aquaguard.ui.profile.edit
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
@@ -6,16 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aquaguard.data.config.RetrofitClient
 import com.example.aquaguard.data.models.Usuario
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ProfileViewModel : ViewModel() {
+class ProfileEditViewModel : ViewModel() {
     private val _formState = MutableStateFlow(Usuario())
     val formState: StateFlow<Usuario> = _formState
 
-    val errorMessage = mutableStateOf<String?>(null)
+    private val _mensajeExito = MutableSharedFlow<String>(replay = 0)
+    val mensajeExito = _mensajeExito.asSharedFlow()
 
     fun cargarUsuario(id: Int) {
         viewModelScope.launch {
@@ -24,13 +27,12 @@ class ProfileViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     response.body()?.let { usuario ->
                         _formState.value = usuario
-                        Log.i("ProfileM", "Usuario cargado correctamente")
                     }
                 } else {
-                    errorMessage.value = "Error al obtener el usuario"
+                    // Mostrar un error o parecido
                 }
             } catch (e: Exception) {
-                errorMessage.value = "Error: ${e.message} "
+                // Mostrar el error
             }
         }
     }
@@ -57,12 +59,12 @@ class ProfileViewModel : ViewModel() {
             try {
                 val response = RetrofitClient.apiServiceUsuario.modificarUsuario(usuario.id, usuario)
                 if (response.isSuccessful) {
-                    Log.i("ProfileVM", "Usuario actualizado con éxito")
+                    _mensajeExito.emit("Información actualizada con éxito")
                 } else {
-                    errorMessage.value = "Error al guardar: ${response.code()}"
+                    _mensajeExito.emit("Error al guardar: ${response.code()}")
                 }
             } catch (e: Exception) {
-                errorMessage.value = "Error: ${e.message}"
+                _mensajeExito.emit("Error: ${e.message}")
             }
         }
     }
