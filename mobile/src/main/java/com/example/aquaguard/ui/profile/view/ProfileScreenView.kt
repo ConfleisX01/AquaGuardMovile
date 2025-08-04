@@ -150,7 +150,7 @@ fun ProfileInformationViewer (navController: NavController, usuarioLogueado : Us
         "Teléfono" to usuarioLogueado.telefono,
         "Correo" to usuarioLogueado.correo,
         "País" to usuarioLogueado.pais,
-        "Contraseña" to "*".repeat(usuarioLogueado.contrasena.length)
+        "Contraseña" to "*****"
     )
 
     Column(

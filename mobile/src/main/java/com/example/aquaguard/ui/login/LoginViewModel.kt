@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aquaguard.data.config.RetrofitClient
+import com.example.aquaguard.data.config.RetrofitClientUserAuth
 import com.example.aquaguard.data.config.SessionManager
+import com.example.aquaguard.data.models.UserAuth
 import com.example.aquaguard.data.models.Usuario
 import kotlinx.coroutines.launch
 
@@ -14,32 +16,44 @@ class LoginViewModel : ViewModel() {
     var usuarioLogueado: Usuario? = null
         private set
 
-    fun login(correo: String, contrasena: String, context: Context, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun login(
+        correo: String,
+        contrasena: String,
+        context: Context,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.apiServiceUsuario.obtenerUsuarios()
+                val userDataAuth = UserAuth(correo, contrasena)
+                val response = RetrofitClientUserAuth.retrofit.iniciarSesion(userDataAuth)
+
                 if (response.isSuccessful) {
-                    val usuarios = response.body()
-                    val user = usuarios?.find {
-                        it.correo == correo && it.contrasena == contrasena
-                    }
+                    val authResponse = response.body()
 
-                    Log.i("USUARIO", user.toString())
+                    if (authResponse != null && authResponse.usuario.id > 0) {
+                        val user = authResponse.usuario
+                        val token = authResponse.token
 
-                    if (user != null) {
                         usuarioLogueado = user
-                        SessionManager(context).saveUser(user)
-                        SessionManager(context).guardarUsuario(user.id)
+                        val sessionManager = SessionManager(context)
+                        sessionManager.saveUser(user)
+                        sessionManager.guardarUsuario(user.id)
+                        // sessionManager.saveToken(token) por ahora no :)
                         onSuccess()
+                        Log.d("AuthDEV", "Login exitoso. ID: ${user.id}, Token: $token")
                     } else {
-                        onError("Credenciales incorrectas")
+                        onError("Credenciales incorrectas o usuario no encontrado.")
                     }
                 } else {
+                    val errorMessage = response.errorBody()?.string()
                     onError("Error al comunicarse con el servidor: ${response.code()}")
+                    Log.e("AuthDEV", "Error: $errorMessage")
                 }
             } catch (e: Exception) {
                 onError("Error de conexión: ${e.message}")
             }
         }
     }
+
 }

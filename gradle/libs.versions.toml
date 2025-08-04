@@ -22,8 +22,30 @@ navigation = "2.7.7"
 retrofit = "2.9.0"
 converter-gson = "2.9.0"
 uiTooling = "1.8.3"
+material3Android = "1.3.2"
+vico = "2.1.3"
 
 [libraries]
+# For Jetpack Compose.
+vico-compose = { group = "com.patrykandpatrick.vico", name = "compose", version.ref = "vico" }
+
+# For Material 2 theming in Jetpack Compose.
+vico-compose-m2 = { group = "com.patrykandpatrick.vico", name = "compose-m2", version.ref = "vico" }
+
+# For Material 3 theming in Jetpack Compose.
+vico-compose-m3 = { group = "com.patrykandpatrick.vico", name = "compose-m3", version.ref = "vico" }
+
+# For Compose Multiplatform (Android, iOS, desktop).
+vico-multiplatform = { group = "com.patrykandpatrick.vico", name = "multiplatform", version.ref = "vico" }
+
+# For Material 2 theming in Compose Multiplatform.
+vico-multiplatform-m2 = { group = "com.patrykandpatrick.vico", name = "multiplatform-m2", version.ref = "vico" }
+
+# For Material 3 theming in Compose Multiplatform.
+vico-multiplatform-m3 = { group = "com.patrykandpatrick.vico", name = "multiplatform-m3", version.ref = "vico" }
+
+# For the Android view system.
+vico-views = { group = "com.patrykandpatrick.vico", name = "views", version.ref = "vico" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converter-gson" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
@@ -51,6 +73,7 @@ androidx-wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

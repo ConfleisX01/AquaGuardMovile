@@ -21,6 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.aquaguard.data.config.SessionManager
+import com.example.aquaguard.ui.controlDevice.ControlDeviceScreen
 import com.example.aquaguard.ui.home.HomeScreen
 import com.example.aquaguard.ui.home.HomeViewModel
 import com.example.aquaguard.ui.login.LoginScreen
@@ -126,6 +127,9 @@ fun MainLayoutWithBottomNav(context: Context, onLogout: () -> Unit) {
             composable (Screen.ProfileEdit.route) {
                 val viewModel : ProfileEditViewModel = viewModel()
                 ProfileEditScreen(viewModel, context)
+            }
+            composable (Screen.ControlDevice.route) {
+                ControlDeviceScreen()
             }
         }
     }

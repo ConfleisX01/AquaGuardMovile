@@ -123,7 +123,7 @@ fun ProfileEditScreen(viewModel: ProfileEditViewModel = viewModel(), context: Co
                         it.second
                     )
                 }
-                Campo("Contraseña", formState.contrasena, "contrasena", keyboardType = KeyboardType.Password) {
+                Campo("Contraseña", "", "contrasena", keyboardType = KeyboardType.Password) {
                     viewModel.actualizarCampo(
                         it.first,
                         it.second

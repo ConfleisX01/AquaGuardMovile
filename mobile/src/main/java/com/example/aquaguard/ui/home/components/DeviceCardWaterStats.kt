@@ -19,12 +19,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.aquaguard.R
+import com.google.android.material.textview.MaterialTextView
 
 @Composable
-fun DeviceCardWaterStats (title: String = "", ph: String = "", temperature: Int = 0, ores: String = "" ) {
-    OutlinedCard (
+fun DeviceCardWaterStats(
+    title: String = "",
+    ph: String = "",
+    temperature: String = "",
+    ores: String = "",
+    lastDataDate: String = ""
+) {
+    OutlinedCard(
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
@@ -34,18 +41,25 @@ fun DeviceCardWaterStats (title: String = "", ph: String = "", temperature: Int 
                 title,
                 color = MaterialTheme.colorScheme.onBackground
             )
+            if (!lastDataDate.isBlank()) {
+                Text(
+                    "Ultima actualizacion: $lastDataDate",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
             Spacer(modifier = Modifier.height(18.dp))
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                Column (
+                Column(
                     modifier = Modifier
                         .weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Icon (
+                    Icon(
                         painter = painterResource(id = R.drawable.icon_ph),
                         contentDescription = null,
                         modifier = Modifier.size(28.dp),
@@ -59,13 +73,13 @@ fun DeviceCardWaterStats (title: String = "", ph: String = "", temperature: Int 
                     )
                 }
 
-                Column (
+                Column(
                     modifier = Modifier
                         .weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Icon (
+                    Icon(
                         painter = painterResource(id = R.drawable.icon_temperature),
                         contentDescription = null,
                         modifier = Modifier.size(28.dp),
@@ -79,13 +93,13 @@ fun DeviceCardWaterStats (title: String = "", ph: String = "", temperature: Int 
                     )
                 }
 
-                Column (
+                Column(
                     modifier = Modifier
                         .weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Icon (
+                    Icon(
                         painter = painterResource(id = R.drawable.icon_waterqa),
                         contentDescription = null,
                         modifier = Modifier.size(28.dp),

@@ -39,12 +39,32 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    packagingOptions {
+        resources {
+            excludes += listOf("META-INF/INDEX.LIST", "META-INF/io.netty.versions.properties")
+        }
+    }
     kotlinOptions {
         jvmTarget = "11"
     }
 }
 
 dependencies {
+    // Vico libs
+    implementation(libs.vico.compose)
+    implementation(libs.vico.compose.m2)
+    implementation(libs.vico.compose.m3)
+    implementation(libs.vico.multiplatform)
+    implementation(libs.vico.views)
+
+    // Vico
+    implementation("com.patrykandpatrick.vico:compose:1.13.0")
+    implementation("com.patrykandpatrick.vico:core:1.13.0")
+    implementation("com.patrykandpatrick.vico:compose-m3:1.13.0") // Para Material3
+
+    // HiveMQ
+    implementation("com.hivemq:hivemq-mqtt-client:1.3.3")
+
     implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
 
@@ -86,4 +106,5 @@ dependencies {
 
     // Wear
     wearApp(project(":wear"))
+    implementation ("com.google.android.gms:play-services-wearable:18.1.0")
 }

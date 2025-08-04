@@ -3,42 +3,29 @@ package com.example.aquaguard.ui.home.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.aquaguard.data.config.RetrofitClientData
-import com.example.aquaguard.data.models.DataInformationWithAQI
-import kotlinx.coroutines.delay
+import com.example.aquaguard.data.config.RetrofitClientAqi
+import com.example.aquaguard.data.models.AirInformationWithAQI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class AQIViewModel : ViewModel() {
-    private val _dataListState = MutableStateFlow<List<DataInformationWithAQI>>(emptyList())
-    val dataListState: StateFlow<List<DataInformationWithAQI>> = _dataListState
-
-    fun cargarDatosPeriodicos() {
-        viewModelScope.launch {
-            while (true) {
-                cargarDatosAQI()
-                delay(60_000L)
-            }
-        }
-    }
+    private val _dataListState = MutableStateFlow<List<AirInformationWithAQI>>(emptyList())
+    val dataListState: StateFlow<List<AirInformationWithAQI>> = _dataListState
 
     fun cargarDatosAQI() {
         viewModelScope.launch {
             try {
-                val response = RetrofitClientData.retrofit.obtenerDatos()
+                val response = RetrofitClientAqi.retrofit.obtenerDatos()
                 if (response.isSuccessful) {
                     response.body()?.let { datosCrudos ->
                         val listaProcesada = datosCrudos.map { dato ->
                             val aqiInt = dato.aqi.toIntOrNull() ?: 0
                             val aqiEstimado = estimarAQI(aqiInt)
-                            DataInformationWithAQI(
+                            AirInformationWithAQI(
                                 id = dato.id,
                                 aqiRaw = aqiInt,
                                 aqiEstimado = aqiEstimado,
-                                tds = dato.tds,
-                                temperature = dato.temperature,
-                                ph = dato.ph
                             )
                         }
                         _dataListState.value = listaProcesada

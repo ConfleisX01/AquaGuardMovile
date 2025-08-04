@@ -22,8 +22,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.aquaguard.ui.home.HomeViewModel
+import com.example.aquaguard.ui.debug.DebugViewModel
 import com.example.aquaguard.ui.home.utils.getWeatherIcon
+import com.example.aquaguard.ui.home.viewmodels.WeatherViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -31,7 +32,9 @@ import com.google.android.gms.location.LocationServices
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun WeatherInfoSection (viewModel: HomeViewModel = viewModel()) {
+fun WeatherInfoSection(
+    viewModel: WeatherViewModel = viewModel()
+) {
     val weather by viewModel.weather.collectAsState()
 
     val context = LocalContext.current
@@ -47,7 +50,7 @@ fun WeatherInfoSection (viewModel: HomeViewModel = viewModel()) {
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location ->
                         location?.let {
-                            viewModel.fetchWeather(it.latitude, it.longitude)
+                            viewModel.reloadFetchWeather(it.latitude, it.longitude)
                         }
                     }
             } catch (e: SecurityException) {

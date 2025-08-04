@@ -4,10 +4,21 @@
     <selectionStates>
       <SelectionState runConfigName="mobile">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-07-17T02:00:48.088599400Z">
+        <DropdownSelection timestamp="2025-07-28T04:48:17.289240100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Black\.android\avd\S23.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=R5CX13335LM" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="wear">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2025-07-30T01:52:17.938237300Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=R5CX13335LM" />
             </handle>
           </Target>
         </DropdownSelection>

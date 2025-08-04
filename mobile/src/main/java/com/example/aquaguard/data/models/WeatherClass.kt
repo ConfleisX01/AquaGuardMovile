@@ -1,6 +1,6 @@
 package com.example.aquaguard.data.models
 
-data class WeatherResponse(
+data class WeatherResponse (
     val current_weather: CurrentWeather,
     val hourly: HourlyData
 )

@@ -1,6 +1,5 @@
 package com.example.aquaguard.ui.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -21,7 +20,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
-    val items = listOf(Screen.Home, Screen.ProfileInformation)
+    val items = listOf(Screen.Home, Screen.ControlDevice, Screen.ProfileInformation)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
@@ -31,9 +30,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         modifier = Modifier
             .height(70.dp)
             .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = RectangleShape
+                width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = RectangleShape
             )
     ) {
         items.forEach { screen ->

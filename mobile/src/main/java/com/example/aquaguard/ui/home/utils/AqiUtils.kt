@@ -10,3 +10,10 @@ fun classifyAqi(aqi: Int): String {
         else -> "Peligroso"
     }
 }
+
+fun estimarAQI(valor: Int): Int {
+    val minimo = 0
+    val maximo = 4095
+    val valClamp = valor.coerceIn(minimo, maximo)
+    return ((valClamp - minimo).toFloat() / (maximo - minimo) * 500).toInt()
+}

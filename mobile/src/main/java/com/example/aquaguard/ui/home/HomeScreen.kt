@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.example.aquaguard.ui.debug.DebugViewModel
 import com.example.aquaguard.ui.home.components.DeviceCardInfo
 import com.example.aquaguard.ui.home.components.WeatherInfoSection
 import com.example.aquaguard.ui.theme.AquaGuardTheme
@@ -19,8 +20,6 @@ fun HomeScreen (
     onLogout: () -> Unit,
     context: Context,
 ) {
-    val datosConAQI by viewModel.dataListState.collectAsState()
-
     AquaGuardTheme {
         Column (
             modifier = Modifier

@@ -28,9 +28,11 @@ class ProfileScreenViewModel : ViewModel() {
                     }
                 } else {
                     errorMessage.value = "Error al obtener el usuario"
+                    Log.e("ProfileM", "Error al obtener el usuario")
                 }
             } catch (e: Exception) {
-                errorMessage.value = "Error: ${e.message} "
+                errorMessage.value = "Error: ${e.message}"
+                Log.e("ProfileM", "Error de servidor")
             }
         }
     }
