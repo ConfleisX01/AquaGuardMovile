@@ -10,17 +10,25 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
-    val items = listOf(Screen.Home, Screen.ControlDevice, Screen.ProfileInformation)
+fun BottomNavigationBar(navController: NavController, isProductOwner: Boolean) {
+    val allItems = listOf(Screen.Home, Screen.ControlDevice, Screen.Forum, Screen.ProfileInformation)
+    val items = if (isProductOwner) {
+        allItems
+    } else {
+        allItems.filterNot {
+            it == Screen.Home || it == Screen.ControlDevice
+        }
+    }
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
@@ -66,5 +74,4 @@ fun BottomNavigationBar(navController: NavHostController) {
             }
         }
     }
-
 }

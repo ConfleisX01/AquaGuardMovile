@@ -16,9 +16,6 @@ import com.example.aquaguard.ui.theme.AquaGuardTheme
 
 @Composable
 fun HomeScreen (
-    viewModel: HomeViewModel,
-    onLogout: () -> Unit,
-    context: Context,
 ) {
     AquaGuardTheme {
         Column (

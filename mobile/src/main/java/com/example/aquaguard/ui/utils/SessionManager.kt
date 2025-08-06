@@ -11,7 +11,7 @@ class SessionManager(private val context: Context) {
     }
 
     fun obtenerUsuario(): Int {
-        return prefs.getInt("id_usuario", 1)
+        return prefs.getInt("id_usuario", -1)
     }
 
     fun saveUser(usuario: Usuario) {

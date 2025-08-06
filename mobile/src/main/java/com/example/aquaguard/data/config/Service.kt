@@ -1,5 +1,7 @@
 package com.example.aquaguard.data.config
 
+import com.example.aquaguard.data.interfaces.ApiProduct
+import com.example.aquaguard.data.interfaces.ApiSales
 import com.example.aquaguard.data.interfaces.ApiServiceAuth
 import com.example.aquaguard.data.interfaces.ApiServiceClima
 import com.example.aquaguard.data.interfaces.ApiServiceData
@@ -9,7 +11,7 @@ import com.example.aquaguard.data.interfaces.ApiServiceWaterQuality
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "http://192.168.0.200:5002/api/"
+private const val BASE_URL = "https://7xrpfkt5-5002.usw3.devtunnels.ms/api/"
 
 object RetrofitClient { // Cliente para los usuarios
     val apiServiceUsuario: ApiServiceUsuario by lazy {
@@ -60,6 +62,28 @@ object RetrofitClientRainData { // Cliente para datos de lluvia
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiServiceRain::class.java)
+    }
+}
+
+object RetrofitClientProductData { // Cliente para datos de los productos
+
+    val retrofit: ApiProduct by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiProduct::class.java)
+    }
+}
+
+object RetrofitClientSalesData { // Cliente para datos de los productos
+
+    val retrofit: ApiSales by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiSales::class.java)
     }
 }
 

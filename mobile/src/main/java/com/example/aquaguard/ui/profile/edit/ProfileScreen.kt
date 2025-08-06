@@ -14,6 +14,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.aquaguard.data.config.SessionManager
@@ -22,7 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun ProfileEditScreen(viewModel: ProfileEditViewModel = viewModel(), context: Context) {
+fun ProfileEditScreen(viewModel: ProfileEditViewModel = viewModel()) {
+    val context = LocalContext.current
     val formState by viewModel.formState.collectAsState()
     val sessionManager = remember { SessionManager(context) }
     val usuarioSesionId = sessionManager.obtenerUsuario()

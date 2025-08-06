@@ -27,7 +27,7 @@ import com.example.aquaguard.ui.navigation.Screen
 import com.example.aquaguard.ui.theme.AquaGuardTheme
 
 @Composable
-fun WelcomeScreen(navController: NavController, viewModel: WelcomeViewModel) {
+fun WelcomeScreen(navController: NavController) {
     AquaGuardTheme {
         Image(
             painter = painterResource(id = R.drawable.background_3),

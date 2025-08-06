@@ -29,4 +29,5 @@ data class Usuario (
 
     @SerializedName("contrasena")
     val contrasena: String = ""
-)
+) {
+}

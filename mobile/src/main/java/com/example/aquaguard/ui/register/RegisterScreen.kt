@@ -15,13 +15,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.aquaguard.R
 import com.example.aquaguard.data.models.Usuario
 import com.example.aquaguard.ui.navigation.Screen
 
 @Composable
-fun RegisterScreen(viewModel: RegisterViewModel, navController : NavController) {
+fun RegisterScreen(navController : NavController) {
+    val viewModel: RegisterViewModel = viewModel()
+
     var nombre by remember { mutableStateOf("") }
     var apellidoPaterno by remember { mutableStateOf("") }
     var apellidoMaterno by remember { mutableStateOf("") }

@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,12 +57,11 @@ import com.example.aquaguard.ui.theme.AquaGuardTheme
 import com.google.android.gms.common.internal.Objects
 
 @Composable
-fun ProfileScreenInformation (
+fun ProfileInformationScreen (
     navController: NavController,
-    context : Context,
-    viewModel: ProfileScreenViewModel = viewModel(),
-    onLogout: () -> Unit
 ) {
+    val viewModel: ProfileScreenViewModel = viewModel()
+    val context = LocalContext.current
     var visible by remember { mutableStateOf(true) }
     val density = LocalDensity.current
 
@@ -96,7 +96,7 @@ fun ProfileScreenInformation (
             ) {
                 ProfileCardViewer(usuarioCargado!!)
                 Text("Hola, "+usuarioCargado!!.nombre.toString(), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.titleLarge)
-                ProfileInformationViewer(navController, usuarioCargado!!, onLogout)
+                ProfileInformationViewer(navController, usuarioCargado!!)
             }
         }
     } else {
@@ -141,7 +141,7 @@ fun ProfileCardViewer (usuarioLogueado : Usuario) {
 }
 
 @Composable
-fun ProfileInformationViewer (navController: NavController, usuarioLogueado : Usuario, onLogout: () -> Unit) {
+fun ProfileInformationViewer (navController: NavController, usuarioLogueado : Usuario) {
     val datosUsuario = mapOf(
         "Nombre" to usuarioLogueado.nombre,
         "Apellido paterno" to usuarioLogueado.apellidoPaterno,
@@ -188,7 +188,7 @@ fun ProfileInformationViewer (navController: NavController, usuarioLogueado : Us
                 Text("Editar Perfil")
             }
             OutlinedButton(
-                onClick = { onLogout() },
+                onClick = { },
                 modifier = Modifier
                     .fillMaxWidth()
             ) {

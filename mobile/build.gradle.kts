@@ -50,6 +50,9 @@ android {
 }
 
 dependencies {
+    // Imagenes
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
     // Vico libs
     implementation(libs.vico.compose)
     implementation(libs.vico.compose.m2)

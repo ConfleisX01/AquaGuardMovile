@@ -23,13 +23,14 @@ import androidx.navigation.NavController
 import com.example.aquaguard.ui.navigation.Screen
 
 import com.example.aquaguard.R
+import com.example.aquaguard.data.config.SessionManager
 
 @Composable
 fun LoginScreen(
     navController: NavController,
-    onLoginSuccess: () -> Unit,
-    viewModel: LoginViewModel = viewModel()
+    sessionManager: SessionManager
 ) {
+    var viewModel: LoginViewModel = viewModel()
     val context = LocalContext.current
     var correo by remember { mutableStateOf("") }
     var contrasena by remember { mutableStateOf("") }
@@ -111,10 +112,10 @@ fun LoginScreen(
                 onClick = {
                     viewModel.login(
                         correo, contrasena, context,
-                        onSuccess = { onLoginSuccess() },
+                        onSuccess = { navController.navigate(Screen.Main.route) }, // Navegar al main en caso de exito
                         onError = {
                             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                        }
+                        } // Mostrar un mensaje de error
                     )
                 },
                 modifier = Modifier.fillMaxWidth()

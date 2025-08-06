@@ -4,14 +4,17 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.aquaguard.data.config.RetrofitClient
 import com.example.aquaguard.data.config.RetrofitClientUserAuth
 import com.example.aquaguard.data.config.SessionManager
 import com.example.aquaguard.data.models.UserAuth
 import com.example.aquaguard.data.models.Usuario
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
+    private val _isProductOwner = MutableStateFlow(false)
+    val isProductOwner: StateFlow<Boolean> = _isProductOwner
 
     var usuarioLogueado: Usuario? = null
         private set
