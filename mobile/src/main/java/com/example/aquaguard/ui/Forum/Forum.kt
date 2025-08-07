@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,13 +32,17 @@ fun ForumScreen() {
     LaunchedEffect(Unit) {
         productsViewModel.getProductsList()
     }
-    Column (
+    Column(
         modifier = Modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Text("Foro AquaGuard", style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold))
+        Text(
+            "Foro AquaGuard",
+            style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold)
+        )
         NewsWrapper()
         ProductsWrapper(productsList)
     }

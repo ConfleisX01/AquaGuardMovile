@@ -67,13 +67,15 @@ fun ProfileInformationScreen (
 
     val sessionManager = remember { SessionManager(context) }
     val usuarioSesionId = sessionManager.obtenerUsuario()
-    val usuarioCargado by viewModel.formState.collectAsState() // formState
+    val usuarioCargado by viewModel.formState.collectAsState()// formState
+
+    val isLoadedData by viewModel.isLoadedData.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.cargarUsuario(usuarioSesionId)
     }
 
-    if (usuarioCargado != null) {
+    if (isLoadedData) {
         AquaGuardTheme {
             AnimatedVisibility(
                 visible = visible,
@@ -95,7 +97,11 @@ fun ProfileInformationScreen (
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 ProfileCardViewer(usuarioCargado!!)
-                Text("Hola, "+usuarioCargado!!.nombre.toString(), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.titleLarge)
+                Text(
+                    "Hola, " + usuarioCargado!!.nombre.toString(),
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleLarge
+                )
                 ProfileInformationViewer(navController, usuarioCargado!!)
             }
         }

@@ -12,31 +12,31 @@ data class ProductModel (
     @SerializedName("descripcion")
     val description: String,
 
-    @SerializedName("image")
+    @SerializedName("imagen")
     val image: String,
 
-    @SerializedName("price")
+    @SerializedName("precioBase")
     val price: Float,
 
-    @SerializedName("isActive")
+    @SerializedName("activo")
     val isActive: Boolean,
 
-    @SerializedName("creationDate")
+    @SerializedName("fechaCreacion")
     val creationDate: String,
 
-    @SerializedName("lastModification")
+    @SerializedName("ultimaModificacion")
     val lastModification: String,
 
     @SerializedName("usuarioId")
     val userId: Int,
 
-    @SerializedName("imageFile")
+    @SerializedName("imagenFile")
     val imageFile: String,
 
     @SerializedName("pdfManual")
     val pdfManual: String,
 
-    @SerializedName("stock")
+    @SerializedName("stockActual")
     val stock: Int,
 
     @SerializedName("pdfFile")

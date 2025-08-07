@@ -14,6 +14,9 @@ class ProfileScreenViewModel : ViewModel() {
     private val _formState = MutableStateFlow(Usuario())
     val formState: StateFlow<Usuario?> = _formState
 
+    private val _isLoadedData = MutableStateFlow(false)
+    val isLoadedData: StateFlow<Boolean> = _isLoadedData
+
     val errorMessage = mutableStateOf<String?>(null)
 
     fun cargarUsuario(id: Int) {
@@ -25,10 +28,14 @@ class ProfileScreenViewModel : ViewModel() {
                         _formState.value = usuario
                         Log.i("ProfileM", "Usuario cargado correctamente")
                         Log.i("ProfileM", usuario.nombre)
+                        if (usuario.id >= 0) {
+                            _isLoadedData.value = true
+                        }
                     }
                 } else {
                     errorMessage.value = "Error al obtener el usuario"
                     Log.e("ProfileM", "Error al obtener el usuario")
+                    _formState.value = Usuario(-1)
                 }
             } catch (e: Exception) {
                 errorMessage.value = "Error: ${e.message}"
