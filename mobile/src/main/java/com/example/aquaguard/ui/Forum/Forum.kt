@@ -27,10 +27,17 @@ import com.example.aquaguard.ui.Forum.viewmodels.ForumViewModel
 @Preview(showBackground = true)
 fun ForumScreen() {
     val productsViewModel: ForumViewModel = viewModel()
+
     val productsList by productsViewModel.productsList.collectAsState()
+    val isProductsData by productsViewModel.isProductData.collectAsState()
+
+    val newsList by productsViewModel.newsList.collectAsState()
+    val isNewsData by productsViewModel.isNewsData.collectAsState()
+
 
     LaunchedEffect(Unit) {
         productsViewModel.getProductsList()
+        productsViewModel.getNewsList()
     }
     Column(
         modifier = Modifier
@@ -43,7 +50,7 @@ fun ForumScreen() {
             "Foro AquaGuard",
             style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold)
         )
-        NewsWrapper()
-        ProductsWrapper(productsList)
+        NewsWrapper(newsList, isNewsData)
+        ProductsWrapper(productsList, isProductsData)
     }
 }

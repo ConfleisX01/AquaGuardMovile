@@ -57,9 +57,7 @@ import com.example.aquaguard.ui.theme.AquaGuardTheme
 import com.google.android.gms.common.internal.Objects
 
 @Composable
-fun ProfileInformationScreen (
-    navController: NavController,
-) {
+fun ProfileInformationScreen (onLogout: () -> Unit, navigation: NavController) {
     val viewModel: ProfileScreenViewModel = viewModel()
     val context = LocalContext.current
     var visible by remember { mutableStateOf(true) }
@@ -102,7 +100,7 @@ fun ProfileInformationScreen (
                     color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.titleLarge
                 )
-                ProfileInformationViewer(navController, usuarioCargado!!)
+                ProfileInformationViewer(onLogout, usuarioCargado!!, navigation)
             }
         }
     } else {
@@ -147,7 +145,7 @@ fun ProfileCardViewer (usuarioLogueado : Usuario) {
 }
 
 @Composable
-fun ProfileInformationViewer (navController: NavController, usuarioLogueado : Usuario) {
+fun ProfileInformationViewer (onLogout: () -> Unit, usuarioLogueado : Usuario, navigation: NavController) {
     val datosUsuario = mapOf(
         "Nombre" to usuarioLogueado.nombre,
         "Apellido paterno" to usuarioLogueado.apellidoPaterno,
@@ -186,15 +184,18 @@ fun ProfileInformationViewer (navController: NavController, usuarioLogueado : Us
         Column {
             Button(
                 onClick = {
-                    navController.navigate(Screen.ProfileEdit.route)
+                   navigation.navigate(Screen.ProfileEdit.route)
                 },
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
                 Text("Editar Perfil")
             }
+
             OutlinedButton(
-                onClick = { },
+                onClick = {
+                    onLogout()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
             ) {

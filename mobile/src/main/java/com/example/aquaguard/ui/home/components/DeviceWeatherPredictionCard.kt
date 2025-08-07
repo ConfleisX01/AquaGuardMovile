@@ -96,7 +96,7 @@ fun DeviceCardWeatherInfoCard (
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                         Text(
-                            text = "AQI: ${aqiData?.aqiEstimado.toString()}",
+                            text = "AQI: ${ if(aqiData?.aqiEstimado != null) aqiData?.aqiEstimado.toString() else "Sin datos"}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimary
                         )

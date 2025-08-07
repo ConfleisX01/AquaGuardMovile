@@ -1,5 +1,6 @@
 package com.example.aquaguard.data.config
 
+import com.example.aquaguard.data.interfaces.ApiNews
 import com.example.aquaguard.data.interfaces.ApiProduct
 import com.example.aquaguard.data.interfaces.ApiSales
 import com.example.aquaguard.data.interfaces.ApiServiceAuth
@@ -84,6 +85,17 @@ object RetrofitClientSalesData { // Cliente para datos de los productos
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiSales::class.java)
+    }
+}
+
+object RetrofitClientNewsData { // Cliente para datos de las noticias del foro
+
+    val retrofit: ApiNews by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiNews::class.java)
     }
 }
 

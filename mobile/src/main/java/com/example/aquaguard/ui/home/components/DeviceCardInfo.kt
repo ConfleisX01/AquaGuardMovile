@@ -74,9 +74,8 @@ fun DeviceCardInfo(
             .padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
-        DeviceCardWeatherInfoCard(ultimoDato, weaterData, storeNoFilter, waterStoredFilter)
 
-        //RainHistoricalCalendar() /// Informacion sobre el historial de lluvias
+        DeviceCardWeatherInfoCard(ultimoDato, weaterData, storeNoFilter, waterStoredFilter)
 
         Text(
             "Información de los almacenes",

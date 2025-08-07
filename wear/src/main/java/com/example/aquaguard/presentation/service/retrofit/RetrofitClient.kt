@@ -4,7 +4,7 @@ import com.example.aquaguard.presentation.service.interfaces.ApiWaterInterface
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "http://192.168.0.200:5002/api/"
+private const val BASE_URL = "https://7xrpfkt5-5002.usw3.devtunnels.ms/api/"
 
 object RetrofitClientContainers { // Cliente para la calidad de agua de los contenedores
     val retrofit = Retrofit.Builder()

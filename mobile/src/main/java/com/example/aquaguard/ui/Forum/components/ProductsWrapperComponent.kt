@@ -19,9 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.aquaguard.data.models.ProductModel
+import com.example.aquaguard.ui.components.SkeletonCard
 
 @Composable
-fun ProductsWrapper(products: List<ProductModel> = emptyList()) {
+fun ProductsWrapper(products: List<ProductModel>, isProductsData: Boolean) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,7 +36,7 @@ fun ProductsWrapper(products: List<ProductModel> = emptyList()) {
                 .fillMaxWidth()
                 .padding(12.dp)
         ) {
-            if (!products.isEmpty()) {
+            if (isProductsData) {
                 products.forEach { item ->
                     ProductItem(
                         title = item.name,
@@ -51,14 +52,10 @@ fun ProductsWrapper(products: List<ProductModel> = emptyList()) {
             } else {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
+                        .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        "Aun no hay productos para mostrar",
-                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Normal)
-                    )
+                    SkeletonCard(isImageActive = true)
                 }
             }
         }

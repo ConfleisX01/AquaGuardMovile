@@ -50,13 +50,6 @@ fun ProfileEditScreen(viewModel: ProfileEditViewModel = viewModel()) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.surface
-                        )
-                    )
-                )
         ) {
             Column(
                 modifier = Modifier
