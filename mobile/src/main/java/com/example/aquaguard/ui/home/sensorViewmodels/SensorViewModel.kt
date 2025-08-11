@@ -58,8 +58,6 @@ class SensorViewModel(application: Application) : AndroidViewModel(application) 
                     }
                 } else {
                     _valueState.value = true
-                    _storeNoFilter.value = null
-                    _storeFilter.value = null
                 }
 
             } catch (e: Exception) {
